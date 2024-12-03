@@ -1,0 +1,152 @@
+# check available indexes
+curl -X GET "http://localhost:9200/_cat/indices?v"
+
+#index details
+curl -X GET "http://localhost:9200/logs-index" | jq
+
+#index stats
+curl -X GET "http://localhost:9200/logs-index/_stats" | jq
+
+
+# examine index by timestamp
+curl -X GET "http://localhost:9200/filebeat-*/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+  "_source": ["@timestamp", "message"],
+  "query": {
+    "match_all": {}
+  }
+}'
+
+
+
+#get data from index
+curl -X GET "http://localhost:9200/.ds-filebeat-8.10.1-2024.11.25-000001/_search?q=*&pretty"
+
+
+
+# case dla czesto wystepujacego slowa
+
+# case dla unikalnego slowa
+
+
+
+# tworzenie indexu
+curl -X PUT "http://localhost:9200/logs-index" -H 'Content-Type: application/json' -d'
+{
+  "mappings": {
+    "properties": {
+      "message": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "@timestamp": {
+        "type": "date"
+      }
+    }
+  }
+}'
+
+
+# wlozenie danych
+curl -X POST "http://localhost:9200/logs-index/_doc" -H 'Content-Type: application/json' -d'
+{
+  "@timestamp": "2024-11-24T12:34:56.000Z",
+  "message": "This is a test log for searching messages."
+}'
+
+curl -X POST "http://localhost:9200/logs-index/_doc" -H 'Content-Type: application/json' -d'
+{
+  "@timestamp": "2024-11-24T13:45:00.000Z",
+  "message": "Another log entry with useful information."
+}'
+
+
+#reindexowanie danych
+curl -X POST "http://localhost:9200/_reindex" -H 'Content-Type: application/json' -d'
+{
+  "source": {
+    "index": ".ds-filebeat-8.10.1-2024.11.25-000001"
+  },
+  "dest": {
+    "index": "logs-index"
+  }
+}'
+
+
+# ZAPYTANIA
+curl -o /dev/null -s -w -X POST "http://localhost:9200/logs-index/_search" -H 'Content-Type: application/json' -d'
+{
+ "profile": true,
+  "size": 0,
+  "query": {
+    "match": {
+      "message": "bajki"
+    }
+  }
+}'
+
+curl -X POST "http://localhost:9200/logs-index/_search" -H 'Content-Type: application/json' -d'
+{
+ "profile": true,
+  "size": 0,
+  "query": {
+    "match": {
+      "message": "user123"
+    }
+  }
+}'
+
+curl -o /dev/null -s -w "Execution Time: %{time_total}s\n" -X POST "http://localhost:9200/logs-index/_search" -H 'Content-Type: application/json' -d'
+{
+ "profile": true,
+  "size": 0,
+  "query": {
+    "match": {
+      "message": "bajki"
+    }
+  }
+}'
+
+
+curl -X POST "http://localhost:9200/logs-index/_search" -H 'Content-Type: application/json' -d'
+{
+ "profile": true,
+  "query": {
+    "match_phrase": {
+      "message": "dzieci proszą o bajki"
+    }
+  }
+}'
+
+
+curl -X  POST "http://localhost:9200/logs-index/_search" -H 'Content-Type: application/json' -d'
+{
+ "profile": true,
+  "query": {
+    "match": {
+      "message": {
+        "query": "EROR",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}'
+
+curl -X POST "http://localhost:9200/logs-index/_search" -H 'Content-Type: application/json' -d'
+{
+ "profile": true,
+  "query": {
+    "prefix": {
+      "message": "Act"
+    }
+  }
+}'
+
+# any data
+curl -G 'http://localhost:8428/api/v1/export' \
+  --data-urlencode 'query={job=~".*"}' \
+  --data-urlencode 'start=0' \
+  --data-urlencode 'end=now'
+
+
+

@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  victorialogs:
+    image: docker.io/victoriametrics/victoria-logs:v1.0.0-victorialogs
+    container_name: victoria-logs
+    ports:
+      - "9428:9428"
+    volumes:
+      - victoria-data:/victoria-metrics-data
+    command:
+      - '--retentionPeriod=100y'
+
+  promtail:
+    image: grafana/promtail:2.9.1
+    container_name: promtail
+    volumes:
+      - ../logs:/var/log
+      - ./promtail-config.yml:/etc/promtail/promtail.yml
+    command: -config.file=/etc/promtail/promtail.yml
+    depends_on:
+      - victorialogs
+
+volumes:
+  victoria-data:

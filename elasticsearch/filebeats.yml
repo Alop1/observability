@@ -1,0 +1,35 @@
+filebeat.inputs:
+  - type: filestream
+    enabled: true
+    paths:
+      - /logs/*.log
+    fields:
+      environment: "local"
+
+processors:
+  - dissect:
+      tokenizer: "[%{timestamp}] [%{log_level}] %{log_message} - user_id=%{user_id}, session=%{session}"
+      field: "message"
+      target_prefix: ""
+  - timestamp:
+      field: timestamp
+      layouts:
+        - '2006-01-02 15:04:05'
+      timezone: UTC
+      ignore_failure: true
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  index: "logs-index"
+
+setup.kibana:
+  host: "http://kibana:5601"
+
+setup.template:
+  enabled: true
+  name: "logs-index"
+  pattern: "logs-*"
+  settings:
+    index.number_of_shards: 1
+    index.number_of_replicas: 1
+

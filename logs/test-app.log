@@ -1,0 +1,25 @@
+[2024-01-01 12:34:56] [INFO] User logged in - user_id=12345, session=abc123
+[2024-11-25 12:34:56] [INFO] User logged in - user_id=12345, session=abc123
+[2024-11-22 12:34:56] [INFO] Pola logged in - user_id=12345, session=abc123
+[2024-11-21 12:34:56] [INFO] FOOOO logged in - user_id=12345, session=abc123
+[2024-11-01 12:34:56] [INFO] BAAR logged in - user_id=12345, session=abc123
+[2024-11-01 12:34:56] [INFO] BAAR2 logged in - user_id=12345, session=abc123
+[2024-11-11 12:34:56] [INFO] QWERT logged in - user_id=12345, session=abc123
+[2011-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test
+[2011-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test3
+[2011-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test2
+[2011-11-11 12:34:56] [ERROR] QWERT logged in - user_id=12345, session=test2
+[2002-11-11 12:34:56 ] [ DEBUG ] QWERT logged in - user_id=12345, session=test
+[2002-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test3
+[2002-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test2
+[2002-11-11 12:34:56] [ERROR] QWERT logged in - user_id=12345, session=test2
+[2005-11-11 12:34:56 ] [ DEBUG ] QWERT logged in - user_id=12345, session=test
+[2005-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test3
+[2005-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test2
+[2005-11-11 12:34:56] [ERROR] QWERT logged in - user_id=12345, session=test2
+[2002-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test2
+[2002-11-11 12:34:56] [ERROR] QWERT logged in - user_id=12345, session=test2
+[2005-11-11 12:34:56 ] [ DEBUG ] QWERT logged in - user_id=12345, session=test
+[2005-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test3
+[2005-11-11 12:34:56] [DEBUG] QWERT logged in - user_id=12345, session=test2
+[2005-11-11 12:34:56] [ERROR] QWERT logged in - user_id=12345, session=test2

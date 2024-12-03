@@ -1,0 +1,26 @@
+curl -G 'http://localhost:8428/api/v1/query' \
+  --data-urlencode 'query={job="local-logs"} |= "QWERT logged in"' \
+
+
+
+
+ curl -G 'http://localhost:8428/api/v1/query' \
+  --data-urlencode 'query={job="local-logs"} |= "QWERT logged in"' \
+  --data-urlencode 'time=1698688320'
+
+
+du -sh
+
+
+curl http://localhost:9428/select/logsql/query -d 'query=error'
+curl http://localhost:9428/select/logsql/query -d 'query=bajki'
+
+curl -o /dev/null -s -w "Execution Time: %{time_total}s\n" http://localhost:9428/select/logsql/query -d 'query=bajki'
+
+
+docker run -d -p 8000:8000 -p 9000:9000 \
+  --name=portainer \
+  --restart=always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data \
+  portainer/portainer-ce

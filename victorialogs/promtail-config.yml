@@ -1,0 +1,31 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: debug
+
+positions:
+  filename: positions.yaml
+
+clients:
+  - url: http://victorialogs:9428/insert/loki/api/v1/push?_stream_fields=instance,job,host,app
+
+scrape_configs:
+  - job_name: system-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: "local-logs"
+          __path__: /var/log/*.log
+
+    pipeline_stages:
+      - regex:
+          expression: '\[(?P<timestamp>.*?)\] (?P<message>.*)'
+      - timestamp:
+          source: timestamp
+          format: "2006-01-02 15:04:05"
+
+#      - output:
+#          source: message
+#          remove_keys: [ "filename" ]
+
