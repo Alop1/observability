@@ -24,10 +24,6 @@ curl -X GET "http://localhost:9200/.ds-filebeat-8.10.1-2024.11.25-000001/_search
 
 
 
-# case dla czesto wystepujacego slowa
-
-# case dla unikalnego slowa
-
 
 
 # tworzenie indexu
